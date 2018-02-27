@@ -49,33 +49,45 @@ CREATE TABLE `Classes` (
   CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacher`) REFERENCES `Professors` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB
 
-INSERT INTO Students (fname, lname, house)
-VALUES
-(Harry, Potter, Gryffindor),
-(Ron, Weasley, Gryffindor),
-(Ginny, Weasley, Gryffindor),
-(Zabini, Blaise, Slytherin),
-(Justin, Finch, Hufflepuff),
-(Mandy, Brocklehurst, Ravenclaw);
-
+INSERT INTO Houses (name)
+VALUES ('Gryffindor'),
+('Slytherin'),
+('Hufflepuff'),
+('Ravenclaw');
 
 INSERT INTO Professors (fname, lname, house)
 VALUES
-(Minerva, McGonagall, Gryffindor),
-(Severus, Snape, Slytherin),
-(Pomona, Sprout, Hufflepuff),
-(Filius, Flitwick, Ravenclaw);
+('Minerva', 'McGonagall', (SELECT id FROM Houses WHERE name = 'Gryffindor')),
+('Severus', 'Snape', (SELECT id FROM Houses WHERE name = 'Slytherin')),
+('Pomona', 'Sprout', (SELECT id FROM Houses WHERE name = 'Hufflepuff')),
+('Filius', 'Flitwick', (SELECT id FROM Houses WHERE name = 'Ravenclaw'));
 
+UPDATE Houses
+SET head_prof = (SELECT id FROM Professors WHERE fname = 'Minerva' AND lname = 'McGonagall')
+WHERE name = 'Gryffindor';
 
+UPDATE Houses
+SET head_prof = (SELECT id FROM Professors WHERE fname = 'Severus' AND lname = 'Snape')
+WHERE name = 'Slytherin';
 
-INSERT INTO Houses (name, head_prof)
+UPDATE Houses
+SET head_prof = (SELECT id FROM Professors WHERE fname = 'Pomona' AND lname = 'Sprout')
+WHERE name = 'Hufflepuff';
+
+UPDATE Houses
+SET head_prof = (SELECT id FROM Professors WHERE fname = 'Filius' AND lname = 'Flitwick')
+WHERE name = 'Ravenclaw';
+
+INSERT INTO Students (fname, lname, house)
 VALUES
-(Gryffindor, (SELECT id FROM Professors WHERE lname == ‘McGonagall’))
-(Slytherin, (SELECT id FROM Professors WHERE lname == ‘Snape’)) 
-(Hufflepuff, (SELECT id FROM Professors WHERE lname == ‘Sprout’))
-(Ravenclaw, (SELECT id FROM Professors WHERE lname == ‘Flitwick’));
+('Harry', 'Potter', (SELECT id FROM Houses WHERE name = 'Gryffindor')),
+('Ron', 'Weasley', (SELECT id FROM Houses WHERE name = 'Gryffindor')),
+('Ginny', 'Weasley', (SELECT id FROM Houses WHERE name = 'Gryffindor')),
+('Justin', 'Finch', (SELECT id FROM Houses WHERE name = 'Hufflepuff')),
+('Draco', 'Malfoy', (SELECT id FROM Houses WHERE name = 'Slytherin')),
+('Mandy', 'Brocklehurst', (SELECT id FROM Houses WHERE name = 'Ravenclaw'));
 
-
+--Everything above here works
 
 INSERT INTO Classes (name, teacher)
 VALUES
