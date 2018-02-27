@@ -32,12 +32,21 @@ CREATE TABLE `Enrolled` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Houses` (
-  `hid` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `head_prof` int(11) NOT NULL,
-  PRIMARY KEY (`hid`),
+  `head_prof` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `head_prof` (`head_prof`),
-  CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`head_prof`) REFERENCES `Professors` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`head_prof`) REFERENCES `Professors` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB
+
+CREATE TABLE `Classes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `teacher` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `teacher` (`teacher`),
+  CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacher`) REFERENCES `Professors` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB
 
 INSERT INTO Students (fname, lname, house)
