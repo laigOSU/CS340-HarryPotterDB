@@ -87,17 +87,15 @@ VALUES
 ('Draco', 'Malfoy', (SELECT id FROM Houses WHERE name = 'Slytherin')),
 ('Mandy', 'Brocklehurst', (SELECT id FROM Houses WHERE name = 'Ravenclaw'));
 
---Everything above here works
-
 INSERT INTO Classes (name, teacher)
 VALUES
-(Potions, (SELECT id FROM Professors WHERE lname = “Snape”)),
-(Charms, (SELECT id FROM Professors WHERE lname = “Flitwick”)),
-(Transfiguration, (SELECT id FROM Professors WHERE lname = “McGonagall”)),
-(Herbology, (SELECT id FROM Professors WHERE lname = “Sprout”));
+('Potions', (SELECT id FROM Professors WHERE fname = 'Severus' AND lname = 'Snape')),
+('Charms', (SELECT id FROM Professors WHERE fname = 'Filius' AND lname = 'Flitwick')),
+('Transfiguration', (SELECT id FROM Professors WHERE fname = 'Minerva' AND lname = 'McGonagall')),
+('Herbology', (SELECT id FROM Professors WHERE fname = 'Pomona' AND lname = 'Sprout'));
 
 INSERT INTO Enrolled (sid, cid)
 VALUES
-((SELECT id FROM Students WHERE lname = “Potter” AND fname = “Harry”),(SELECT id FROM Classes WHERE name = “Charms”)),
-((SELECT id FROM Students WHERE lname = “Weasley” AND fname = “Ron”),(SELECT id FROM Classes WHERE name = “Potions”)),
-((SELECT id FROM Students WHERE lname = “Weasley” AND fname = “Ginny”),(SELECT id FROM Classes WHERE name = “Transfiguration”));
+((SELECT id FROM Students WHERE lname = 'Potter' AND fname = 'Harry'),(SELECT id FROM Classes WHERE name = 'Charms')),
+((SELECT id FROM Students WHERE lname = 'Weasley' AND fname = 'Ron'),(SELECT id FROM Classes WHERE name = 'Potions')),
+((SELECT id FROM Students WHERE lname = 'Weasley' AND fname = 'Ginny'),(SELECT id FROM Classes WHERE name = 'Transfiguration'));
