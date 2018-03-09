@@ -1,0 +1,21 @@
+<h1>Harry Potter DB</h1>
+<h3>By Geneva Lai and Anthony Scimone</h3>
+<h1>Hogwarts People:</h1>
+<table>
+    <thead> 
+        <th>First Name</th> 
+        <th>Last Name</th>
+        <th>House</th>
+        <th>Class</th>
+    </thead> 
+    <tbody> 
+        {{#each students}} 
+        <tr> 
+            <td>{{fname}}</td> 
+            <td>{{lname}}</td>
+            <td>{{house}}</td>
+            <td>{{class}}</td>
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table> 

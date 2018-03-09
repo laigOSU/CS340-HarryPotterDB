@@ -1,0 +1,13 @@
+<h1>Update {{student.fname}} {{student.lname}}:</h1>
+<form id="update-student" action="/students" method="post">
+    First name: <input type="text" name="fname" value="{{student.fname}}"><br>
+    Last name: <input type="text" name="lname" value="{{student.lname}}"><br>
+    House: <select name="house" id="house"> 
+        {{#each house}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select><br>
+    Classes: <input type="number" name="age" value="{{student.age}}"><br>
+</form>
+<button onclick="updateStudent({{student.id}})">Update</button>
+<script defer>selectHouse({{student.house}});</script>
