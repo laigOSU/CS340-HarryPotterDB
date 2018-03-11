@@ -82,6 +82,7 @@ module.exports = function(){
                 res.render('students', context);
             }
 		}
+
 	});
 
 	router.get('/:id',function(req,res){
@@ -90,12 +91,15 @@ module.exports = function(){
 		var mysql = req.app.get('mysql');
 		getStudent(res, mysql, context, req, complete)
 		getHouses(res, mysql, context, complete)
+
+
 		function complete(){
             callbackCount++;
             if(callbackCount >= 2){
                 res.render('update-student', context);
             }
 		}
+		
 	});
 
     router.post('/', function(req, res){
@@ -110,7 +114,7 @@ module.exports = function(){
                 res.redirect('/students');
             }
         });
-	});
+});
 
 	return router;
 }();
