@@ -20,6 +20,8 @@ app.get('/',function(req,res){
 
 app.use('/students', require('./students.js'))
 
+app.use('/classes', require('./classes.js'))
+
 app.use(function(req,res){
   res.status(404);
   res.render('404');

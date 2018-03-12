@@ -1,0 +1,32 @@
+<h1>Harry Potter DB</h1>
+<h3>By Geneva Lai and Anthony Scimone</h3>
+<h1>Hogwarts Classes:</h1>
+
+<table>
+    <thead> 
+        <th>Class Name</th> 
+        <th>Professor</th>
+        <th>Students</th>
+    </thead> 
+    <tbody>
+        <tr> 
+        {{#each classes}}
+            <td>{{this.name}}</td> 
+            <td>{{this.teacherfname}} {{this.teacherfname}}</td>
+            <td>{{this.house}}</td>
+            
+            <td>{{#each students}}{{this.fname}} {{this.lname}}, {{/each}}</td>
+            
+        </tr> 
+{{/each}} 
+</tbody> 
+</table> 
+<form id="addclass" action="/classes" method="post">
+    Class name: <input type="text" name="name"><br>
+    Professor: <select name="teacher"> 
+        {{#each professors}}
+        <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
+        {{/each}}
+    </select><br>
+    <input type="submit" value="Submit">
+</form>
