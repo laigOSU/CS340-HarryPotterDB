@@ -6,7 +6,6 @@
         <th>First Name</th> 
         <th>Last Name</th>
         <th>House</th>
-        <th>Class</th>
     </thead> 
     <tbody> 
         {{#each students}}
@@ -15,6 +14,7 @@
             <td>{{this.lname}}</td>
             <td>{{this.house}}</td>
             <td><a href="/students/{{this.id}}">Update</a></td>
+            <td><form action="/students/{{this.id}}?_method=DELETE" method="POST"><button type = "submit">Delete</button></td>     
         </tr> 
         {{/each}} 
     </tbody> 

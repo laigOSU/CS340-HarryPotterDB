@@ -11,8 +11,8 @@ CREATE TABLE `Students` (
   `house` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `house` (`house`),
-  CONSTRAINT `students_ibfk_1` FOREIGN KEY (`house`) REFERENCES `Houses` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB
+  CONSTRAINT `students_ibfk_1` FOREIGN KEY (`house`) REFERENCES `Houses` (`id`)
+) ENGINE=InnoDB;
 
 CREATE TABLE `Professors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -21,14 +21,14 @@ CREATE TABLE `Professors` (
   `house` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `house` (`house`),
-  CONSTRAINT `professors_ibfk_1` FOREIGN KEY (`house`) REFERENCES `Houses` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB
+  CONSTRAINT `professors_ibfk_1` FOREIGN KEY (`house`) REFERENCES `Houses` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 CREATE TABLE `Enrolled` (
   `sid` int(11) NOT NULL,
   `cid` int(11) NOT NULL,
-  CONSTRAINT `enrolled_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `Students` (`id`),
-  CONSTRAINT `enrolled_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `Classes` (`id`)
+  CONSTRAINT `enrolled_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `Students` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `enrolled_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `Classes` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Houses` (
@@ -38,7 +38,7 @@ CREATE TABLE `Houses` (
   PRIMARY KEY (`id`),
   KEY `head_prof` (`head_prof`),
   CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`head_prof`) REFERENCES `Professors` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB
+) ENGINE=InnoDB;
 
 CREATE TABLE `Classes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -46,8 +46,10 @@ CREATE TABLE `Classes` (
   `teacher` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `teacher` (`teacher`),
-  CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacher`) REFERENCES `Professors` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB
+  CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacher`) REFERENCES `Professors` (`id`)
+) ENGINE=InnoDB;
+
+
 
 INSERT INTO Houses (name)
 VALUES ('Gryffindor'),

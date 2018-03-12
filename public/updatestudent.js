@@ -1,4 +1,4 @@
-function updateStudent(id){
+function updatestudent(id){
     $.ajax({
         url: '/students/' + id,
         type: 'PUT',

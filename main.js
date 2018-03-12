@@ -1,6 +1,7 @@
 var express = require('express');
 var mysql = require('./dbcon.js');
 var bodyParser = require('body-parser');
+var methodOverride = require("method-override");
 
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
@@ -11,8 +12,8 @@ app.use('/static', express.static('public'));
 app.set('view engine', 'handlebars');
 app.set('port', process.argv[2]);
 app.set('mysql', mysql);
+app.use(methodOverride("_method"));
 
-//app.use('/students', require('./students.js'));
 
 app.get('/',function(req,res){
     res.render('home');
@@ -21,6 +22,8 @@ app.get('/',function(req,res){
 app.use('/students', require('./students.js'))
 
 app.use('/classes', require('./classes.js'))
+
+app.use('/houses', require('./houses.js'))
 
 app.use(function(req,res){
   res.status(404);
