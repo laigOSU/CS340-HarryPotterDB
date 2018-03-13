@@ -1,6 +1,12 @@
 <h1>Harry Potter DB</h1>
 <h3>By Geneva Lai and Anthony Scimone</h3>
 <h1>Hogwarts Houses:</h1>
+
+<!--******************************************************************
+      ADD HOUSE
+*******************************************************************-->
+
+
 <table>
   <!--******************************************************************
     DISPLAY HOUSE DATA
@@ -17,25 +23,21 @@
             <td>{{this.head_prof_fname}}</td>
             <td>{{this.head_prof_lname}}</td>
 
-            <td><button onclick="deletehouse({{id}})">Delete</button></td>
+            <td><form action="/houses/{{this.id}}?_method=DELETE" method="POST"><button type = "submit">Delete</button></form></td>
             <td><a href="/houses/{{this.id}}">Update</a></td>
 
         </tr>
         {{/each}}
     </tbody>
 
-    <!--******************************************************************
-      ADD HOUSE
-    *******************************************************************-->
-    <form id="addhouse" action="/houses" method="post">
-    Add House Name: <input type="text" name="name"><br>
-    <!--Head Professor: <input type="text" name="head_prof"><br>-->
-    Add Head Professor (last name): <select name="head_prof">
-      {{#each Professors}}
-        <option value="{{id}}">{{this.head_prof_lname}}</option>
+<form id="addhouse" action="/houses" method="post">
+    House Name: <input type="text" name="name"><br>
+    Head Professor: <select name="head_prof">
+      {{#each professors}}
+        <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
       {{/each}}
     </select><br>
     <input type="submit" value="Add House">
 </form>
-
 </table>
+

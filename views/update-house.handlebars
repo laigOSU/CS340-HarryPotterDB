@@ -3,14 +3,13 @@
 *******************************************************************-->
 <h1>Update {{house.name}}:</h1>
 
-<form id="update-house" action="/houses" method="post">
+<form id="update-house" action="/houses/{{house.id}}?_method=PUT" method="post">
     House name: <input type="text" name="name" value="{{house.name}}"><br>
 
     Head Professor: <select name="head_prof" id="prof-selector">
-      {{#each Professors}}
-        <option value="{{id}}">{{this.head_prof_lname}}</option>
+      {{#each professors}}
+        <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
       {{/each}}
     </select><br>
+    <button type="submit">Update</button>
 </form>
-<button onclick="update_house({{house.id}})">Update</button>
-<script defer>select_prof({{house.head_prof_lname}});</script>

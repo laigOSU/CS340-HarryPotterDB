@@ -25,6 +25,8 @@ app.use('/classes', require('./classes.js'))
 
 app.use('/houses', require('./houses.js'))
 
+app.use('/enrollment', require('./enrollment.js'))
+
 app.use(function(req,res){
   res.status(404);
   res.render('404');

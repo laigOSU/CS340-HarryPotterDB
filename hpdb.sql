@@ -49,8 +49,6 @@ CREATE TABLE `Classes` (
   CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacher`) REFERENCES `Professors` (`id`)
 ) ENGINE=InnoDB;
 
-
-
 INSERT INTO Houses (name)
 VALUES ('Gryffindor'),
 ('Slytherin'),
