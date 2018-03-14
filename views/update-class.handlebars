@@ -1,0 +1,11 @@
+<h1>Update {{class.name}}:</h1>
+
+<form id="update-student" action="/classes/{{class.id}}?_method=PUT" method="POST">
+    Name: <input type="text" name="name" value="{{class.name}}"><br>
+    Teacher: <select name="teacher" id="teacher-selector"> 
+        {{#each professors}}
+        <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
+        {{/each}}
+    </select><br>
+    <button type="submit">Update</button>
+</form>

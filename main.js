@@ -20,11 +20,9 @@ app.get('/',function(req,res){
 });
 
 app.use('/students', require('./students.js'))
-
+app.use('/professors', require('./professors.js'))
 app.use('/classes', require('./classes.js'))
-
 app.use('/houses', require('./houses.js'))
-
 app.use('/enrollment', require('./enrollment.js'))
 
 app.use(function(req,res){

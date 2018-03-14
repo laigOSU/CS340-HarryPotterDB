@@ -1,0 +1,32 @@
+<h1>Harry Potter DB</h1>
+<h3>By Geneva Lai and Anthony Scimone</h3>
+<h1>Hogwarts Students:</h1>
+<table>
+    <thead> 
+        <th>First Name</th> 
+        <th>Last Name</th>
+        <th>House</th>
+    </thead> 
+    <tbody> 
+        {{#each students}}
+        <tr> 
+            <td>{{this.fname}}</td> 
+            <td>{{this.lname}}</td>
+            <td>{{this.house}}</td>
+            <td><a href="/students/{{this.id}}">Update</a></td>
+            <td><form action="/students/{{this.id}}?_method=DELETE" method="POST"><button type = "submit">Delete</button></td>     
+        </tr> 
+        {{/each}} 
+    </tbody> 
+<form id="addstudent" action="/students" method="post">
+    First name: <input type="text" name="fname"><br>
+    Last name: <input type="text" name="lname"><br>
+    House: <select name="house"> 
+        {{#each houses}}
+        <option value="{{id}}">{{this.name}}</option>
+        {{/each}}
+    </select><br>
+    <input type="submit" value="Submit">
+</form>
+
+</table> 

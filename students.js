@@ -11,7 +11,6 @@ module.exports = function(){
 	            res.end();
 	        }
 	        context.students = results;
-	        console.log(context)
 	        complete();
 	        
 	    });
@@ -64,7 +63,6 @@ module.exports = function(){
 		function complete(){
             callbackCount++;
             if(callbackCount >= 2){
-            	console.log(context)
                 res.render('update-student', context);
             }
 		}
@@ -96,7 +94,8 @@ module.exports = function(){
 				res.redirect('/students');
             }
         });
-});
+	});
+
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         var sql = "DELETE FROM Students WHERE id = ?";
@@ -110,7 +109,7 @@ module.exports = function(){
                 res.redirect('/students');
             }
         })
-})
+	});
 
 	return router;
 }();

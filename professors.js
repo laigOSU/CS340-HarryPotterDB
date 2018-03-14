@@ -4,36 +4,37 @@ module.exports = function(){
 	var mysql = require('./dbcon.js');
 	var methodOverride = require("method-override");
 
-	function getProfessors(res, mysql, context, complete){
-	    mysql.pool.query('SELECT Professors.id AS id, Professors.fname, Professors.lname, Professors.house FROM Professors', function(error, results, fields){
+	function getStudents(res, mysql, context, complete){
+	    mysql.pool.query('SELECT Students.id AS id, Students.fname, Students.lname, Houses.name AS house FROM Students INNER JOIN Houses ON Students.house = Houses.id', function(error, results, fields){
 	        if(error){
 	            res.write(JSON.stringify(error));
 	            res.end();
 	        }
-	        context.professors = results;
+	        context.students = results;
+	        console.log(context)
 	        complete();
 	        
 	    });
 	}
 
-	function getClasses(res, mysql, context, complete){
-	    mysql.pool.query('SELECT Classes.id, Classes.name, Professors.fname AS teacherfname, Professors.lname AS teacherlname FROM Classes INNER JOIN Professors ON Professors.id = Classes.teacher', function(error, results, fields){
+	function getStudent(res, mysql, context, req, complete){
+	    mysql.pool.query('SELECT Students.id, Students.fname, Students.lname, Houses.id AS house FROM Students INNER JOIN Houses ON Students.house = Houses.id WHERE Students.id ='+req.params.id, function(error, results, fields){
 	        if(error){
 	            res.write(JSON.stringify(error));
 	            res.end();
 	        }
-	        context.classes = results;
+	        context.student = results[0];
 	        complete();
 	    });
 	}
 
-	function getClass(res, mysql, context, req, complete){
-	    mysql.pool.query('SELECT Classes.id, Classes.name, Professors.fname AS teacherfname, Professors.lname AS teacherlname FROM Classes INNER JOIN Professors ON Professors.id = Classes.teacher WHERE Classes.id =' +req.params.id, function(error, results, fields){
+	function getHouses(res, mysql, context, complete){
+	    mysql.pool.query('SELECT Houses.id, Houses.name FROM Houses', function(error, results, fields){
 	        if(error){
 	            res.write(JSON.stringify(error));
 	            res.end();
 	        }
-	        context.class = results[0];
+	        context.houses = results;
 	        complete();
 	    });
 	}
@@ -42,14 +43,12 @@ module.exports = function(){
 		var context = {};
 		callbackCount = 0;
 		var mysql = req.app.get('mysql');
-		//getStudents(res, mysql, context, complete)
-		getClasses(res, mysql, context, complete);
-		getProfessors(res, mysql, context, complete);
+		getStudents(res, mysql, context, complete)
+		getHouses(res, mysql, context, complete)
 		function complete(){
             callbackCount++;
             if(callbackCount >= 2){
-            	console.log(context);
-                res.render('classes', context);
+                res.render('students', context);
             }
 		}
 	});
@@ -57,49 +56,50 @@ module.exports = function(){
 	router.get('/:id',function(req,res){
 		var context = {};
 		callbackCount = 0;
+		context.jsscripts = ["selectedhouse.js", "updatestudent.js"];
+
 		var mysql = req.app.get('mysql');
-		getClass(res, mysql, context, req, complete);
-		getProfessors(res, mysql, context, complete);
+		getStudent(res, mysql, context, req, complete)
+		getHouses(res, mysql, context, complete)
 		function complete(){
             callbackCount++;
             if(callbackCount >= 2){
-            	console.log(context);
-                res.render('update-class', context);
+            	console.log(context)
+                res.render('update-student', context);
             }
 		}
 	});
 
     router.post('/', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "INSERT INTO Classes (name, teacher) VALUES (?,?)";
-        var inserts = [req.body.name, req.body.teacher];
+        var sql = "INSERT INTO Students (fname, lname, house) VALUES (?,?,?)";
+        var inserts = [req.body.fname, req.body.lname, req.body.house];
         sql = mysql.pool.query(sql,inserts,function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
             }else{
-                res.redirect('/classes');
+                res.redirect('/students');
             }
         });
 	});
 
     router.put('/:id', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "UPDATE Classes SET name=?, teacher=? WHERE id=?";
-        var inserts = [req.body.name, req.body.teacher, req.params.id];
+        var sql = "UPDATE Students SET fname=?, lname=?, house=? WHERE id=?";
+        var inserts = [req.body.fname, req.body.lname, req.body.house, req.params.id];
         sql = mysql.pool.query(sql,inserts,function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
             }else{
-				res.redirect('/classes');
+				res.redirect('/students');
             }
         });
-	});
-
+});
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "DELETE FROM Classes WHERE id = ?";
+        var sql = "DELETE FROM Students WHERE id = ?";
         var inserts = [req.params.id];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
@@ -107,10 +107,10 @@ module.exports = function(){
                 res.status(400);
                 res.end();
             }else{
-                res.redirect('/classes');
+                res.redirect('/students');
             }
         })
-	});
+})
 
 	return router;
 }();
