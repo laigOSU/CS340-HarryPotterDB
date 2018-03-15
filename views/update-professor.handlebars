@@ -1,0 +1,12 @@
+<h1>Update {{professor.fname}} {{professor.lname}}:</h1>
+
+<form id="update-professor" action="/professors/{{professor.id}}?_method=PUT" method="POST">
+    First name: <input type="text" name="fname" value="{{professor.fname}}"><br>
+    Last name: <input type="text" name="lname" value="{{professor.lname}}"><br>
+    House: <select name="house" id="house-selector">
+        {{#each houses}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+    </select><br>
+    <button type="submit">Update</button>
+</form>
