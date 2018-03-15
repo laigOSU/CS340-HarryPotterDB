@@ -22,9 +22,8 @@
         {{#each professors}}
             <td>{{this.fname}}</td>
             <td>{{this.lname}}</td>
-            <td>{{this.house}}</td>
-            <td><a href="/professors/{{this.id}}">Update</a></td>
-            <td><form action="/professors/{{id}}?_method=DELETE" method="POST"><button type = "submit">Delete</button></td>
+            {{#if this.house}}<td>{{this.house}}</td>{{else}}<td>No House</td>{{/if}}
+            <td><a href="/professors/{{this.id}}">Update/Delete</a></td>
         </tr>
         {{/each}}
     </tbody>

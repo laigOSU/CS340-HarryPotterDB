@@ -11,7 +11,7 @@ module.exports = function(){
     HELPER QUERY FUNCTIONS
 *****************************************************************************/
   function getProfessors(res, mysql, context, complete){
-    mysql.pool.query('SELECT Professors.id AS id, Professors.fname, Professors.lname, Houses.name AS house FROM Professors INNER JOIN Houses ON Houses.id = Professors.house',
+    mysql.pool.query('SELECT Professors.id AS id, Professors.fname, Professors.lname, Houses.name AS house FROM Professors LEFT JOIN Houses ON Houses.id = Professors.house',
     function(error, results, fields){
       if(error){
           res.write(JSON.stringify(error));
@@ -23,7 +23,7 @@ module.exports = function(){
   }
 
   function getProfessor(res, mysql, context, req, complete){
-    mysql.pool.query('SELECT Professors.id AS id, Professors.fname, Professors.lname, Houses.name AS name FROM Professors INNER JOIN Houses ON Houses.id = Professors.house WHERE Professors.id =' +req.params.id,
+    mysql.pool.query('SELECT Professors.id AS id, Professors.fname, Professors.lname, Houses.name AS name FROM Professors LEFT JOIN Houses ON Houses.id = Professors.house WHERE Professors.id =' +req.params.id,
     function(error, results, fields){
       if(error){
           res.write(JSON.stringify(error));

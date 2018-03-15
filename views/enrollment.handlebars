@@ -1,9 +1,26 @@
-<h1> {{class.name}}:</h1>
+Add a student to a class:
+<form id="addenrollment" action="/enrollment" method="post">
+    Class: <select name="cid"> 
+        {{#each classes}}
+        <option value="{{id}}">{{this.name}}</option>
+        {{/each}}
+    </select><br>
+    Student: <select name="sid"> 
+        {{#each students}}
+        <option value="{{id}}">{{this.fname}} {{this.lname}}</option>
+        {{/each}}
+    </select><br>
+    <input type="submit" value="Submit">
+</form>
 
 
-<div>Class Name: {{class.name}} </div>
-<div>Students </div>
+See a Class's Students:
+
+{{#each classes}}
+<div><a href="/enrollment/class/{{this.id}}">See {{this.name}}'s Student</a></div>
+{{/each}}
+
+See a Student's Classes:
 {{#each students}}
-
-<div>{{this.fname}} {{this.lname}}</div>
-{{/each}} 
+<div><a href="/enrollment/student/{{this.id}}">See {{this.fname}} {{this.lname}}'s Classes</a></div>
+{{/each}}

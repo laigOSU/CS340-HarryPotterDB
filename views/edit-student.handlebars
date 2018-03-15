@@ -1,0 +1,13 @@
+<div>
+Student: {{student.fname}} {{student.fname}}
+</div>
+
+
+Classes: 
+{{#each classes}}
+<div>
+	{{this.name}}
+	<div><form action="/enrollment/student/{{this.id}}?_method=DELETE" method="POST"><button type = "submit">Delete Class</button></form></div>
+</div>
+
+{{/each}}

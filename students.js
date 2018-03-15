@@ -17,7 +17,7 @@ module.exports = function(){
 	}
 
 	function getStudent(res, mysql, context, req, complete){
-	    mysql.pool.query('SELECT Students.id, Students.fname, Students.lname, Houses.id AS house FROM Students INNER JOIN Houses ON Students.house = Houses.id WHERE Students.id ='+req.params.id, function(error, results, fields){
+	    mysql.pool.query('SELECT Students.id, Students.fname, Students.lname, Houses.id AS house FROM Students LEFT JOIN Houses ON Students.house = Houses.id WHERE Students.id ='+req.params.id, function(error, results, fields){
 	        if(error){
 	            res.write(JSON.stringify(error));
 	            res.end();
