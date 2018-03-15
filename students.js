@@ -5,7 +5,7 @@ module.exports = function(){
 	var methodOverride = require("method-override");
 
 	function getStudents(res, mysql, context, complete){
-	    mysql.pool.query('SELECT Students.id AS id, Students.fname, Students.lname, Houses.name AS house FROM Students INNER JOIN Houses ON Students.house = Houses.id', function(error, results, fields){
+	    mysql.pool.query('SELECT Students.id AS id, Students.fname, Students.lname, Houses.name AS house FROM Students LEFT JOIN Houses ON Students.house = Houses.id', function(error, results, fields){
 	        if(error){
 	            res.write(JSON.stringify(error));
 	            res.end();

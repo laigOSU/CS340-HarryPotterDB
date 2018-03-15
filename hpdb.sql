@@ -11,7 +11,7 @@ CREATE TABLE `Students` (
   `house` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `house` (`house`),
-  CONSTRAINT `students_ibfk_1` FOREIGN KEY (`house`) REFERENCES `Houses` (`id`)
+  CONSTRAINT `students_ibfk_1` FOREIGN KEY (`house`) REFERENCES `Houses` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Professors` (
@@ -21,12 +21,14 @@ CREATE TABLE `Professors` (
   `house` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `house` (`house`),
-  CONSTRAINT `professors_ibfk_1` FOREIGN KEY (`house`) REFERENCES `Houses` (`id`) ON DELETE CASCADE
+  CONSTRAINT `professors_ibfk_1` FOREIGN KEY (`house`) REFERENCES `Houses` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Enrolled` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `sid` int(11) NOT NULL,
   `cid` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
   CONSTRAINT `enrolled_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `Students` (`id`) ON DELETE CASCADE,
   CONSTRAINT `enrolled_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `Classes` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
@@ -34,10 +36,7 @@ CREATE TABLE `Enrolled` (
 CREATE TABLE `Houses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `head_prof` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `head_prof` (`head_prof`),
-  CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`head_prof`) REFERENCES `Professors` (`id`) ON DELETE SET NULL
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Classes` (
@@ -61,22 +60,6 @@ VALUES
 ('Severus', 'Snape', (SELECT id FROM Houses WHERE name = 'Slytherin')),
 ('Pomona', 'Sprout', (SELECT id FROM Houses WHERE name = 'Hufflepuff')),
 ('Filius', 'Flitwick', (SELECT id FROM Houses WHERE name = 'Ravenclaw'));
-
-UPDATE Houses
-SET head_prof = (SELECT id FROM Professors WHERE fname = 'Minerva' AND lname = 'McGonagall')
-WHERE name = 'Gryffindor';
-
-UPDATE Houses
-SET head_prof = (SELECT id FROM Professors WHERE fname = 'Severus' AND lname = 'Snape')
-WHERE name = 'Slytherin';
-
-UPDATE Houses
-SET head_prof = (SELECT id FROM Professors WHERE fname = 'Pomona' AND lname = 'Sprout')
-WHERE name = 'Hufflepuff';
-
-UPDATE Houses
-SET head_prof = (SELECT id FROM Professors WHERE fname = 'Filius' AND lname = 'Flitwick')
-WHERE name = 'Ravenclaw';
 
 INSERT INTO Students (fname, lname, house)
 VALUES

@@ -5,11 +5,7 @@
 
 <form id="update-house" action="/houses/{{house.id}}?_method=PUT" method="post">
     House name: <input type="text" name="name" value="{{house.name}}"><br>
-
-    Head Professor: <select name="head_prof" id="prof-selector">
-      {{#each professors}}
-        <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
-      {{/each}}
-    </select><br>
-    <button type="submit">Update</button>
+    <button type="submit">Update House</button>
 </form>
+
+<div><form action="/houses/{{house.id}}?_method=DELETE" method="POST"><button type = "submit">Delete House</button></form></div>

@@ -5,7 +5,10 @@
 <!--******************************************************************
       ADD HOUSE
 *******************************************************************-->
-
+<form id="addhouse" action="/houses" method="post">
+    House Name: <input type="text" name="name"><br>
+    <input type="submit" value="Add House">
+</form>
 
 <table>
   <!--******************************************************************
@@ -13,31 +16,14 @@
   *******************************************************************-->
     <thead>
         <th>House Name</th>
-        <th>Head Professor<br>First Name</th>
-        <th>Head Professor<br>Last Name</th>
     </thead>
     <tbody>
         {{#each houses}}
         <tr>
             <td>{{this.name}}</td>
-            <td>{{this.head_prof_fname}}</td>
-            <td>{{this.head_prof_lname}}</td>
-
-            <td><form action="/houses/{{this.id}}?_method=DELETE" method="POST"><button type = "submit">Delete</button></form></td>
-            <td><a href="/houses/{{this.id}}">Update</a></td>
-
+            <td><a href="/houses/{{this.id}}">Update/Delete</a></td>
         </tr>
         {{/each}}
     </tbody>
-
-<form id="addhouse" action="/houses" method="post">
-    House Name: <input type="text" name="name"><br>
-    Head Professor: <select name="head_prof">
-      {{#each professors}}
-        <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
-      {{/each}}
-    </select><br>
-    <input type="submit" value="Add House">
-</form>
 </table>
 

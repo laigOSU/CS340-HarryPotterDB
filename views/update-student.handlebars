@@ -8,7 +8,7 @@
         <option value="{{this.id}}">{{this.name}}</option>
         {{/each}}
     </select><br>
-    <button type="submit">Update</button>
+    <button type="submit">Update Student</button>
 </form>
-
+<div><form action="/students/{{student.id}}?_method=DELETE" method="POST"><button type = "submit">Delete Student</button></div>
 <script defer>selecthouse({{student.house}});</script>
