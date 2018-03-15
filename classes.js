@@ -16,6 +16,19 @@ module.exports = function(){
 	    });
 	}
 
+	function getStudents(res, mysql, context, req, complete){
+	    mysql.pool.query('SELECT Classes.id, Classes.name, Students.fname, Students.lname FROM Enrolled INNER JOIN Students ON Enrolled.sid = Students.id INNER JOIN Classes ON Enrolled.cid = Classes.id WHERE Classes.id =' +req.params.id, function(error, results, fields){
+	        if(error){
+	            res.write(JSON.stringify(error));
+	            res.end();
+	        }
+	        context.students = results;
+	        console.log(context)
+	        complete();
+	        
+	    });
+	}
+
 	function getClasses(res, mysql, context, complete){
 	    mysql.pool.query('SELECT Classes.id, Classes.name, Professors.fname AS teacherfname, Professors.lname AS teacherlname FROM Classes INNER JOIN Professors ON Professors.id = Classes.teacher', function(error, results, fields){
 	        if(error){
@@ -65,6 +78,21 @@ module.exports = function(){
             if(callbackCount >= 2){
             	console.log(context);
                 res.render('update-class', context);
+            }
+		}
+	});
+
+	router.get('/enrollment/:id',function(req,res){
+		var context = {};
+		callbackCount = 0;
+		var mysql = req.app.get('mysql');
+		getClass(res, mysql, context, req, complete);
+		getStudents(res, mysql, context, req, complete);
+		function complete(){
+            callbackCount++;
+            if(callbackCount >= 2){
+            	console.log(context);
+                res.render('enrollment', context);
             }
 		}
 	});

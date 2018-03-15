@@ -25,6 +25,7 @@
             <td>{{this.name}}</td> 
             <td>{{this.teacherfname}} {{this.teacherlname}}</td>
             <td><a href="/classes/{{this.id}}">Update</a></td>
+            <td><a href="/classes/enrollment/{{this.id}}">Enrolled Students</a></td>
             <td><form action="/classes/{{this.id}}?_method=DELETE" method="POST"><button type = "submit">Delete</button></td>   
         </tr>
         {{/each}}

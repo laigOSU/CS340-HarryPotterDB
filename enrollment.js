@@ -5,7 +5,7 @@ module.exports = function(){
 	var methodOverride = require("method-override");
 
 	function getStudents(res, mysql, context, complete){
-	    mysql.pool.query('SELECT Students.id AS id, Students.fname, Students.lname, FROM Students', function(error, results, fields){
+	    mysql.pool.query('SELECT Students.id, Students.fname, Students.lname, FROM Students INNER JOIN Enrolled ON Enrolled.sid = Students.id', function(error, results, fields){
 	        if(error){
 	            res.write(JSON.stringify(error));
 	            res.end();
@@ -17,7 +17,7 @@ module.exports = function(){
 	    });
 	}
 
-	function getStudent(res, mysql, context, req, complete){
+	function getClass(res, mysql, context, req, complete){
 	    mysql.pool.query('SELECT Students.id, Students.fname, Students.lname FROM Students WHERE Students.id ='+req.params.id, function(error, results, fields){
 	        if(error){
 	            res.write(JSON.stringify(error));
@@ -29,12 +29,12 @@ module.exports = function(){
 	}
 
 	function getClasses(res, mysql, context, complete){
-	    mysql.pool.query('SELECT Houses.id, Houses.name FROM Houses', function(error, results, fields){
+	    mysql.pool.query('SELECT Classes.id, Classes.name, Students.fname, Students.lname FROM Enrolled INNER JOIN Students ON Enrolled.sid = Students.id INNER JOIN Classes ON Enrolled.cid = Classes.id', function(error, results, fields){
 	        if(error){
 	            res.write(JSON.stringify(error));
 	            res.end();
 	        }
-	        context.houses = results;
+	        context.classes = results;
 	        complete();
 	    });
 	}
@@ -43,11 +43,12 @@ module.exports = function(){
 		var context = {};
 		callbackCount = 0;
 		var mysql = req.app.get('mysql');
-		getStudents(res, mysql, context, complete)
+		//getStudents(res, mysql, context, complete)
 		getClasses(res, mysql, context, complete)
 		function complete(){
             callbackCount++;
-            if(callbackCount >= 2){
+            if(callbackCount >= 1){
+            	console.log(context)
                 res.render('enrollment', context);
             }
 		}

@@ -96,6 +96,8 @@ VALUES
 
 INSERT INTO Enrolled (sid, cid)
 VALUES
+((SELECT id FROM Students WHERE lname = 'Potter' AND fname = 'Harry'),(SELECT id FROM Classes WHERE name = 'Potions')),
 ((SELECT id FROM Students WHERE lname = 'Potter' AND fname = 'Harry'),(SELECT id FROM Classes WHERE name = 'Charms')),
 ((SELECT id FROM Students WHERE lname = 'Weasley' AND fname = 'Ron'),(SELECT id FROM Classes WHERE name = 'Potions')),
+((SELECT id FROM Students WHERE lname = 'Weasley' AND fname = 'Ron'),(SELECT id FROM Classes WHERE name = 'Charms')),
 ((SELECT id FROM Students WHERE lname = 'Weasley' AND fname = 'Ginny'),(SELECT id FROM Classes WHERE name = 'Transfiguration'));
