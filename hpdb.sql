@@ -45,7 +45,7 @@ CREATE TABLE `Classes` (
   `teacher` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `teacher` (`teacher`),
-  CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacher`) REFERENCES `Professors` (`id`)
+  CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacher`) REFERENCES `Professors` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
 INSERT INTO Houses (name)
